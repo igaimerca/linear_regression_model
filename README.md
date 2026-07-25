@@ -1,4 +1,4 @@
-# iTalkSign — Hearing-Loss Risk Regression
+# iTalkSign - Hearing-Loss Risk Regression
 
 **Mission & problem:** iTalkSign builds offline, low-end-device AI for real-time communication for
 deaf and hard-of-hearing individuals. This project predicts a person's pure-tone-average hearing
@@ -6,7 +6,10 @@ threshold (PTA4, dB HL) from demographic and noise-exposure survey answers, so t
 likely hearing-loss severity without a full audiometric exam.
 
 **Dataset:** NHANES 2015–2016 (CDC/NCHS open data), merging demographics, an audiometry
-questionnaire (noise exposure, tinnitus, hearing-aid use), and measured hearing thresholds.
+questionnaire (noise exposure, tinnitus, hearing-aid use), and measured hearing thresholds:
+- Demographics: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/DEMO_I.htm
+- Audiometry Questionnaire: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/AUQ_I.htm
+- Audiometry Exam: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/AUX_I.htm
 
 ## Repository layout
 
@@ -32,7 +35,7 @@ linear_regression_model/
 
 ## Live links
 
-- **API (Swagger UI):** `<PASTE-YOUR-RENDER-URL>/docs` — update after deploying to Render.
+- **API (Swagger UI):** `<PASTE-YOUR-RENDER-URL>/docs` - update after deploying to Render.
 - **YouTube demo video (≤7 min):** `<PASTE-YOUR-YOUTUBE-LINK>`
 
 ## Running the notebook / retraining locally
