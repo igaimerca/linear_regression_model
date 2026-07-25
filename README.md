@@ -6,7 +6,10 @@ threshold (PTA4, dB HL) from demographic and noise-exposure survey answers, so t
 likely hearing-loss severity without a full audiometric exam.
 
 **Dataset:** NHANES 2015–2016 (CDC/NCHS open data), merging demographics, an audiometry
-questionnaire (noise exposure, tinnitus, hearing-aid use), and measured hearing thresholds.
+questionnaire (noise exposure, tinnitus, hearing-aid use), and measured hearing thresholds:
+- Demographics — [docs](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/DEMO_I.htm) | [direct download](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/DEMO_I.xpt)
+- Audiometry Questionnaire — [docs](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/AUQ_I.htm) | [direct download](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/AUQ_I.xpt)
+- Audiometry Exam — [docs](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/AUX_I.htm) | [direct download](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/AUX_I.xpt)
 
 ## Repository layout
 
