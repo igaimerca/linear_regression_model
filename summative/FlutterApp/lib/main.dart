@@ -339,7 +339,7 @@ class _PredictionPageState extends State<PredictionPage> {
                                       for (final entry in f.options!)
                                         DropdownMenuItem(
                                           value: entry.key,
-                                          child: Text("${entry.key} — ${entry.value}"),
+                                          child: Text("${entry.key} - ${entry.value}"),
                                         ),
                                     ],
                                     onChanged: _loading
