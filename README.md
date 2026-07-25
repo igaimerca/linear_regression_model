@@ -6,10 +6,7 @@ threshold (PTA4, dB HL) from demographic and noise-exposure survey answers, so t
 likely hearing-loss severity without a full audiometric exam.
 
 **Dataset:** NHANES 2015–2016 (CDC/NCHS open data), merging demographics, an audiometry
-questionnaire (noise exposure, tinnitus, hearing-aid use), and measured hearing thresholds:
-- Demographics — [docs](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/DEMO_I.htm) | [direct download](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/DEMO_I.xpt)
-- Audiometry Questionnaire — [docs](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/AUQ_I.htm) | [direct download](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/AUQ_I.xpt)
-- Audiometry Exam — [docs](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/AUX_I.htm) | [direct download](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/AUX_I.xpt)
+questionnaire (noise exposure, tinnitus, hearing-aid use), and measured hearing thresholds.
 
 ## Repository layout
 
@@ -32,11 +29,6 @@ linear_regression_model/
 ├── pyproject.toml / uv.lock
 └── README.md
 ```
-
-## Live links
-
-- **API (Swagger UI):** `<PASTE-YOUR-RENDER-URL>/docs` - update after deploying to Render.
-- **YouTube demo video (≤7 min):** `<PASTE-YOUR-YOUTUBE-LINK>`
 
 ## Running the notebook / retraining locally
 
