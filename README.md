@@ -14,7 +14,7 @@ questionnaire (noise exposure, tinnitus, hearing-aid use), and measured hearing 
 ## Live links
 
 - **API (Swagger UI):** https://linear-regression-model-nrpk.onrender.com/docs
-- **YouTube demo video (≤7 min):** https://youtu.be/bKDtbLiUSc0
+- **YouTube demo video (≤7 min):** https://youtu.be/rLYb9EgqlDI
 
 ## Repository layout
 
