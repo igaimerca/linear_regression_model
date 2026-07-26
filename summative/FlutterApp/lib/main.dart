@@ -68,9 +68,11 @@ class _FieldSpec {
   final double max;
   final IconData icon;
   final List<MapEntry<int, String>>? options;
+  final String? dependsOnKey;
+  final int? dependsOnValue;
 
   const _FieldSpec(this.key, this.label, this.hint, this.min, this.max, this.icon,
-      {this.options});
+      {this.options, this.dependsOnKey, this.dependsOnValue});
 
   bool get isDropdown => options != null;
 }
@@ -98,33 +100,33 @@ class _PredictionPageState extends State<PredictionPage> {
   String? _errorText;
 
   static const _yesNo = [
-    MapEntry(0, "N/A"),
     MapEntry(1, "Yes"),
     MapEntry(2, "No"),
   ];
 
   static final List<_Section> _sections = [
     _Section("About you", Icons.person_outline, [
-      _FieldSpec("RIDAGEYR", "Age (years)", "20 - 69", 20, 69, Icons.cake_outlined),
+      _FieldSpec("RIDAGEYR", "Age", "In years, 20-69", 20, 69, Icons.cake_outlined),
       _FieldSpec("RIAGENDR", "Gender", "", 1, 2, Icons.wc_outlined, options: const [
         MapEntry(1, "Male"),
         MapEntry(2, "Female"),
       ]),
-      _FieldSpec("RIDRETH3", "Race/ethnicity", "", 1, 7, Icons.groups_outlined, options: const [
+      _FieldSpec("RIDRETH3", "Race / ethnicity", "", 1, 7, Icons.groups_outlined, options: const [
         MapEntry(1, "Mexican American"),
         MapEntry(2, "Other Hispanic"),
-        MapEntry(3, "Non-Hispanic White"),
-        MapEntry(4, "Non-Hispanic Black"),
-        MapEntry(6, "Non-Hispanic Asian"),
-        MapEntry(7, "Other / Multiracial"),
+        MapEntry(3, "White (non-Hispanic)"),
+        MapEntry(4, "Black (non-Hispanic)"),
+        MapEntry(6, "Asian (non-Hispanic)"),
+        MapEntry(7, "Other / multiracial"),
       ]),
-      _FieldSpec("DMDEDUC2", "Education level", "", 1, 5, Icons.school_outlined, options: const [
-        MapEntry(1, "Less than 9th grade"),
-        MapEntry(2, "9th-11th grade"),
-        MapEntry(3, "High school grad / GED"),
-        MapEntry(4, "Some college / AA degree"),
-        MapEntry(5, "College graduate or above"),
-      ]),
+      _FieldSpec("DMDEDUC2", "Highest education completed", "", 1, 5, Icons.school_outlined,
+          options: const [
+            MapEntry(1, "Less than 9th grade"),
+            MapEntry(2, "9th-11th grade"),
+            MapEntry(3, "High school grad / GED"),
+            MapEntry(4, "Some college / associate degree"),
+            MapEntry(5, "College graduate or higher"),
+          ]),
       _FieldSpec("DMDMARTL", "Marital status", "", 1, 6, Icons.family_restroom_outlined,
           options: const [
             MapEntry(1, "Married"),
@@ -132,38 +134,40 @@ class _PredictionPageState extends State<PredictionPage> {
             MapEntry(3, "Divorced"),
             MapEntry(4, "Separated"),
             MapEntry(5, "Never married"),
-            MapEntry(6, "Living with partner"),
+            MapEntry(6, "Living with a partner"),
           ]),
-      _FieldSpec("INDFMPIR", "Income-to-poverty ratio", "0 - 5", 0, 5, Icons.payments_outlined),
+      _FieldSpec("INDFMPIR", "Household income level", "0 = lowest, 5 = highest", 0, 5,
+          Icons.payments_outlined),
     ]),
     _Section("Hearing & noise history", Icons.hearing_outlined, [
-      _FieldSpec("AUQ054", "Self-rated hearing", "", 1, 5, Icons.record_voice_over_outlined,
-          options: const [
+      _FieldSpec("AUQ054", "How would you rate your hearing?", "", 1, 5,
+          Icons.record_voice_over_outlined, options: const [
             MapEntry(1, "Excellent"),
             MapEntry(2, "Good"),
-            MapEntry(3, "A little trouble"),
-            MapEntry(4, "Moderate trouble"),
+            MapEntry(3, "A little trouble hearing"),
+            MapEntry(4, "Moderate trouble hearing"),
             MapEntry(5, "Deaf"),
           ]),
-      _FieldSpec("AUQ191", "Ringing/buzzing in ears (past yr)", "", 0, 2, Icons.graphic_eq,
+      _FieldSpec("AUQ191", "Ringing or buzzing in your ears (past year)?", "", 1, 2,
+          Icons.graphic_eq, options: _yesNo),
+      _FieldSpec("AUQ300", "Have you ever fired a gun?", "", 1, 2, Icons.sports_outlined,
           options: _yesNo),
-      _FieldSpec("AUQ300", "Ever used firearms", "", 0, 2, Icons.sports_outlined, options: _yesNo),
-      _FieldSpec(
-          "AUQ320", "Hearing protection when shooting", "", 0, 5, Icons.shield_outlined,
-          options: const [
-            MapEntry(0, "N/A"),
+      _FieldSpec("AUQ320", "Do you wear ear protection when shooting?", "", 1, 5,
+          Icons.shield_outlined,
+          dependsOnKey: "AUQ300", dependsOnValue: 1, options: const [
             MapEntry(1, "Always"),
             MapEntry(2, "Usually"),
             MapEntry(3, "Sometimes"),
             MapEntry(4, "Seldom"),
             MapEntry(5, "Never"),
           ]),
-      _FieldSpec("AUQ331", "Ever had job noise exposure", "", 0, 2, Icons.factory_outlined,
-          options: _yesNo),
-      _FieldSpec("AUQ350", "Ever very loud noise at work", "", 0, 2, Icons.volume_up_outlined,
-          options: _yesNo),
-      _FieldSpec("AUQ370", "Off-work loud noise exposure", "", 0, 2, Icons.music_note_outlined,
-          options: _yesNo),
+      _FieldSpec("AUQ331", "Has your job ever exposed you to loud noise?", "", 1, 2,
+          Icons.factory_outlined, options: _yesNo),
+      _FieldSpec("AUQ350", "Was that workplace noise very loud?", "", 1, 2,
+          Icons.volume_up_outlined,
+          dependsOnKey: "AUQ331", dependsOnValue: 1, options: _yesNo),
+      _FieldSpec("AUQ370", "Any loud noise exposure outside of work?", "", 1, 2,
+          Icons.music_note_outlined, options: _yesNo),
     ]),
   ];
 
@@ -184,6 +188,11 @@ class _PredictionPageState extends State<PredictionPage> {
       c.dispose();
     }
     super.dispose();
+  }
+
+  bool _isVisible(_FieldSpec f) {
+    if (f.dependsOnKey == null) return true;
+    return _selected[f.dependsOnKey] == f.dependsOnValue;
   }
 
   Color _bandColor(String band) {
@@ -224,7 +233,9 @@ class _PredictionPageState extends State<PredictionPage> {
     try {
       final body = <String, dynamic>{
         for (final f in _allFields)
-          f.key: f.isDropdown ? _selected[f.key] : num.parse(_controllers[f.key]!.text),
+          f.key: f.isDropdown
+              ? (_isVisible(f) ? _selected[f.key] : 0)
+              : num.parse(_controllers[f.key]!.text),
       };
       final response = await http
           .post(
@@ -321,60 +332,78 @@ class _PredictionPageState extends State<PredictionPage> {
                         ],
                       ),
                       const SizedBox(height: 10),
-                      Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(14),
-                          child: Column(
-                            children: [
-                              for (final f in section.fields) ...[
-                                if (f.isDropdown)
-                                  DropdownButtonFormField<int>(
-                                    initialValue: _selected[f.key],
-                                    isExpanded: true,
-                                    decoration: InputDecoration(
-                                      labelText: f.label,
-                                      prefixIcon: Icon(f.icon, size: 20),
+                      Builder(builder: (context) {
+                        final visibleFields =
+                            section.fields.where(_isVisible).toList(growable: false);
+                        return Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(14),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                for (final f in visibleFields) ...[
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 6, left: 2),
+                                    child: Text(
+                                      f.label,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.grey.shade800,
+                                      ),
                                     ),
-                                    items: [
-                                      for (final entry in f.options!)
-                                        DropdownMenuItem(
-                                          value: entry.key,
-                                          child: Text("${entry.key} - ${entry.value}"),
-                                        ),
-                                    ],
-                                    onChanged: _loading
-                                        ? null
-                                        : (value) => setState(() => _selected[f.key] = value),
-                                    validator: (value) => value == null ? "Required" : null,
-                                  )
-                                else
-                                  TextFormField(
-                                    controller: _controllers[f.key],
-                                    enabled: !_loading,
-                                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                                    decoration: InputDecoration(
-                                      labelText: f.label,
-                                      hintText: f.hint,
-                                      prefixIcon: Icon(f.icon, size: 20),
-                                    ),
-                                    validator: (value) {
-                                      if (value == null || value.trim().isEmpty) {
-                                        return "Required";
-                                      }
-                                      final parsed = num.tryParse(value);
-                                      if (parsed == null) return "Enter a valid number";
-                                      if (parsed < f.min || parsed > f.max) {
-                                        return "Must be ${f.min}–${f.max}";
-                                      }
-                                      return null;
-                                    },
                                   ),
-                                if (f != section.fields.last) const SizedBox(height: 12),
+                                  if (f.isDropdown)
+                                    DropdownButtonFormField<int>(
+                                      key: ValueKey(f.key),
+                                      initialValue: _selected[f.key],
+                                      isExpanded: true,
+                                      decoration: InputDecoration(
+                                        hintText: "Select one",
+                                        prefixIcon: Icon(f.icon, size: 20),
+                                      ),
+                                      items: [
+                                        for (final entry in f.options!)
+                                          DropdownMenuItem(
+                                            value: entry.key,
+                                            child: Text(entry.value),
+                                          ),
+                                      ],
+                                      onChanged: _loading
+                                          ? null
+                                          : (value) => setState(() => _selected[f.key] = value),
+                                      validator: (value) => value == null ? "Please choose one" : null,
+                                    )
+                                  else
+                                    TextFormField(
+                                      key: ValueKey(f.key),
+                                      controller: _controllers[f.key],
+                                      enabled: !_loading,
+                                      keyboardType:
+                                          const TextInputType.numberWithOptions(decimal: true),
+                                      decoration: InputDecoration(
+                                        hintText: f.hint,
+                                        prefixIcon: Icon(f.icon, size: 20),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.trim().isEmpty) {
+                                          return "Please fill this in";
+                                        }
+                                        final parsed = num.tryParse(value);
+                                        if (parsed == null) return "Enter a valid number";
+                                        if (parsed < f.min || parsed > f.max) {
+                                          return "Must be between ${f.min.toInt()} and ${f.max.toInt()}";
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  if (f != visibleFields.last) const SizedBox(height: 18),
+                                ],
                               ],
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
+                        );
+                      }),
                       const SizedBox(height: 20),
                     ],
                     SizedBox(
