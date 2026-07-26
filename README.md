@@ -54,15 +54,6 @@ uv run --project ../.. uvicorn main:app --reload
 # Swagger UI at http://127.0.0.1:8000/docs
 ```
 
-### Deploying to Render
-
-1. Push this repo to GitHub.
-2. On Render: New → Web Service → connect the repo.
-3. Root directory: `summative/API`.
-4. Build command: `pip install -r requirements.txt`.
-5. Start command: `uvicorn main:app --host 0.0.0.0 --port $PORT`.
-6. Once live, Swagger UI is at `https://<your-service>.onrender.com/docs`.
-
 ## Running the Flutter app
 
 ```bash
