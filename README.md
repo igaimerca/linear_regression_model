@@ -11,6 +11,11 @@ questionnaire (noise exposure, tinnitus, hearing-aid use), and measured hearing 
 - Audiometry Questionnaire — [docs](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/AUQ_I.htm) | [direct download](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/AUQ_I.xpt)
 - Audiometry Exam — [docs](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/AUX_I.htm) | [direct download](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/AUX_I.xpt)
 
+## Live links
+
+- **API (Swagger UI):** https://linear-regression-model-nrpk.onrender.com/docs
+- **YouTube demo video (≤7 min):** `<PASTE-YOUR-YOUTUBE-LINK>`
+
 ## Repository layout
 
 ```
@@ -65,9 +70,9 @@ cd linear_regression_model/summative/FlutterApp
 flutter pub get
 ```
 
-Before running, open `lib/main.dart` and set `kApiBaseUrl` to your deployed Render URL (or
-`http://10.0.2.2:8000` for the Android emulator / `http://127.0.0.1:8000` for iOS
-simulator/desktop, if the API is running locally). Then:
+`kApiBaseUrl` in `lib/main.dart` is already set to the deployed Render API above. To point it at a
+local API instead, change it to `http://10.0.2.2:8000` for the Android emulator or
+`http://127.0.0.1:8000` for iOS simulator/desktop. Then:
 
 ```bash
 flutter run            # pick your connected device/simulator

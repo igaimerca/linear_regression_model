@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 /// Update this to your deployed Render URL, e.g. "https://italksign-api.onrender.com".
 /// Use "http://10.0.2.2:8000" for the Android emulator talking to a local `uvicorn` run,
 /// or "http://127.0.0.1:8000" for iOS simulator / desktop.
-const String kApiBaseUrl = "https://YOUR-RENDER-APP.onrender.com";
+const String kApiBaseUrl = "https://linear-regression-model-nrpk.onrender.com";
 
 const Color kBrandBlue = Color(0xFF2F6690);
 const Color kBrandTeal = Color(0xFF3A8891);
